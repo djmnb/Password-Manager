@@ -1,0 +1,99 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <style>
+        input{
+            border: none;
+        }
+        #success{
+            {#position: sticky;#}
+            {#bottom: 10px;#}
+            margin: auto 0px;
+            width: 200px;
+            background-color: red;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+    <div class="bs-example" data-example-id="panel-without-body-with-table" style="margin-top: 10px">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            {#      <div class="panel-heading">全部账号</div>#}
+            <div class="panel-heading">
+                <a href="/add">
+                    <button type="button" class="btn btn-success">添加</button>
+                </a>
+            </div>
+
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>账号</th>
+                    <th>密码</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    {% for password in data %}
+                        <tr>
+                            <td class="id">{{ password.id }}</td>
+                            <td>{{ password.name }}</td>
+                            <td>
+                                <span class="ad">********</span>
+                                <span class="myhide ad" style="display: none">{{ password.password }}</span>&nbsp;
+                                <i class="bi bi-eye-fill"></i>
+                            </td>
+                            <td>
+                                <a href="/edit/{{ password.id }}/"><button type="button" class="btn btn-primary">编辑</button></a>
+                                <button type="button" class="btn btn-danger del" for="/delete/{{ password.id }}" >删除</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+
+        $(function (){
+           showorhide();
+        });
+
+        function showorhide(){
+            {#console.log($(".bi"))#}
+            $(".myhide").hide()
+            $(".bi").click(function (){
+                var el = $(this);
+                if(el.hasClass("bi-eye-fill")){
+                    el.removeClass("bi-eye-fill")
+                    el.addClass("bi-eye-slash-fill")
+                    el.prev().show()
+                    el.prev().prev().hide()
+                }else{
+                    el.removeClass("bi-eye-slash-fill")
+                    el.addClass("bi-eye-fill")
+                    el.prev().prev().show()
+                    el.prev().hide()
+                }
+            })
+            $(".del").click(click)
+        }
+        function click(){
+            var flag = confirm("是否删除ID为:"+$(this).parent().prevAll(".id").text()+"的账号密码")
+            if(flag){
+                location.href = $(this).attr("for")
+            }
+        }
+
+
+
+    </script>
+{% endblock %}

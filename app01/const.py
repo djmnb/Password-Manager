@@ -1,0 +1,2 @@
+class const:
+   userinfo = "userinfo"

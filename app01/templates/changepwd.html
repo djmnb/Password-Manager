@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block css %}
+    <style>
+        .box {
+            width: 400px;
+            margin-top: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #f0f0f0;
+            padding: 10px 30px 30px 30px;
+            -webkit-box-shadow: 5px 10px 10px rgba(0, 0, 0, .05);
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, .05);
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="box">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">密码</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="密码" name="pwd" value="{{ pwd }}">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">确认密码</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="密码" name="repwd" value="{{ repwd }}">
+                <span style="color: red;">{{ error }}</span>
+                <span style="color: greenyellow;">{{ success }}</span>
+            </div>
+            <button type="submit" class="btn btn-primary">更改密码</button>
+        </form>
+    </div>
+{% endblock %}
